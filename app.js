@@ -17,6 +17,10 @@ const coin = document.querySelectorAll('img')[1];
 
 const init = () => {
 
+    const maxWidth = window.innerWidth;
+    const maxHeigth = window.innerHeight;
+    const coinOffset = coin.width;
+
     moveCoin();
     window.addEventListener('keyup', function(e){
         if(e.key === 'ArrowDown' || e.key === 'Down'){
@@ -24,11 +28,13 @@ const init = () => {
         } else if(e.key === 'ArrowUp' || e.key === 'Up'){
             moveVertical(avatar, -50);
         } else if(e.key ==='ArrowRight' || e.key === 'Right'){
+            avatar.style.transform = 'scale(1,1)';
             moveHorizon(avatar, 50);
         } else if(e.key ==='ArrowLeft' || e.key === 'Left'){
+            avatar.style.transform = 'scale(-1,1)';
             moveHorizon(avatar, -50);
         }
-        if(isTouching(avatar,coin)) moveCoin();
+        if(isTouching(avatar,coin)) moveCoin(maxWidth, maxHeigth, coinOffset);
     });
 }
 
@@ -47,10 +53,10 @@ const extractPos = (position) => {
     return parseInt(position.slice(0, -2))
 }
 
-const moveCoin = () => {
-    const x = Math.floor(Math.random() * window.innerWidth);
+const moveCoin = (width, height, offset) => {
+    const x = Math.floor(Math.random() * (width - offset));
     // const y = ?
-    const y = Math.floor(Math.random() * window.innerHeight);
+    const y = Math.floor(Math.random() * (height - offset));
     coin.style.top = `${y}px`;
     // coin.style. ?? = ??
     coin.style.left = `${x}px`;
